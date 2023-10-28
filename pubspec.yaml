@@ -1,0 +1,59 @@
+name: productive
+description: Ilova haqida ma'lumot
+
+publish_to: 'none'
+
+version: 0.0.0+1
+
+environment:
+  sdk: '>=3.1.2 <4.0.0'
+
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  cupertino_icons: ^1.0.2
+  flutter_svg: ^2.0.8
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  flutter_lints: ^2.0.0
+
+flutter:
+
+  uses-material-design: true
+
+  assets:
+    - assets/
+    - assets/fonts/
+    - assets/icons/
+    - assets/icons/global/
+    - assets/icons/tasks/
+    - assets/images/
+    - assets/objects/
+
+  fonts:
+    - family: Barlow
+      fonts:
+        - asset: assets/fonts/Barlow-Light.ttf
+        - asset: assets/fonts/Barlow-LightItalic.ttf
+        - asset: assets/fonts/Barlow-Thin.ttf
+        - asset: assets/fonts/Barlow-ThinItalic.ttf
+        - asset: assets/fonts/Barlow-Regular.ttf
+        - asset: assets/fonts/Barlow-Italic.ttf
+        - asset: assets/fonts/Barlow-Medium.ttf
+        - asset: assets/fonts/Barlow-MediumItalic.ttf
+        - asset: assets/fonts/Barlow-SemiBold.ttf
+        - asset: assets/fonts/Barlow-SemiBoldItalic.ttf
+        - asset: assets/fonts/Barlow-Bold.ttf
+        - asset: assets/fonts/Barlow-BoldItalic.ttf
+        - asset: assets/fonts/Barlow-ExtraBold.ttf
+        - asset: assets/fonts/Barlow-ExtraBoldItalic.ttf
+        - asset: assets/fonts/Barlow-Black.ttf
+        - asset: assets/fonts/Barlow-BlackItalic.ttf
+         
+ 
+  
