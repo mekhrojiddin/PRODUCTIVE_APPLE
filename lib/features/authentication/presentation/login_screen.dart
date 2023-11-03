@@ -20,6 +20,7 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  bool isLoginDataValid = false;
   final mailTextEditingController = TextEditingController();
   final passwordTextEditingController = TextEditingController();
 
@@ -31,6 +32,8 @@ class _LoginScreenState extends State<LoginScreen> {
     fontSize: 14,
     fontWeight: FontWeight.w400,
   );
+
+  final formKey = GlobalKey<FormState>();
 
   bool isObscure = true;
 
@@ -77,6 +80,42 @@ class _LoginScreenState extends State<LoginScreen> {
       );
 
   @override
+  void initState() {
+    mailTextEditingController.addListener(() {
+      if (formKey.currentState!.validate()) {
+        if (!isLoginDataValid) {
+          setState(() {
+            isLoginDataValid = true;
+          });
+        }
+      } else {
+        if (isLoginDataValid) {
+          setState(() {
+            isLoginDataValid = false;
+          });
+        }
+      }
+    });
+
+    passwordTextEditingController.addListener(() {
+      if (formKey.currentState!.validate()) {
+        if (!isLoginDataValid) {
+          setState(() {
+            isLoginDataValid = true;
+          });
+        }
+      } else {
+        if (isLoginDataValid) {
+          setState(() {
+            isLoginDataValid = false;
+          });
+        }
+      }
+    });
+    super.initState();
+  }
+
+  @override
   void dispose() {
     mailTextEditingController.dispose();
     passwordTextEditingController.dispose();
@@ -88,106 +127,147 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16),
-        child: Column(
-          children: [
-            const Gap(67),
-            SvgPicture.asset(AppIcons.logo),
-            const Gap(44),
-            TextField(
-              style: textFieldContentStyle,
-              cursorColor: cursorColor,
-              focusNode: mailFocusNode,
-              controller: mailTextEditingController,
-              decoration: decoration(hintText: 'Email'),
-              textInputAction: TextInputAction.next,
-              keyboardType: TextInputType.emailAddress,
-              onEditingComplete: () {
-                passwordFocusNode.requestFocus();
-              },
-            ),
-            const Gap(16),
-            TextField(
-              style: textFieldContentStyle,
-              cursorColor: cursorColor,
-              focusNode: passwordFocusNode,
-              controller: passwordTextEditingController,
-              decoration: decoration(
-                hintText: 'Password',
-                suffixIcon: GestureDetector(
-                  onTap: () {
-                    setState(() {
-                      isObscure = !isObscure;
-                    });
-                  },
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 12, vertical: 13.5),
-                    child: SvgPicture.asset(
-                      isObscure ? AppIcons.eyeOff : AppIcons.eyeOn,
+      resizeToAvoidBottomInset: false,
+      body: Builder(builder: (context) {
+        return GestureDetector(
+          behavior: HitTestBehavior.opaque,
+          onTap: () {
+            if (FocusScope.of(context).hasFocus) {
+              FocusScope.of(context).unfocus();
+            }
+          },
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: Form(
+              key: formKey,
+              child: Column(
+                children: [
+                  const Gap(67),
+                  SvgPicture.asset(AppIcons.logo),
+                  const Gap(44),
+                  TextFormField(
+                    style: textFieldContentStyle,
+                    cursorColor: cursorColor,
+                    focusNode: mailFocusNode,
+                    controller: mailTextEditingController,
+                    decoration: decoration(hintText: 'Email'),
+                    textInputAction: TextInputAction.next,
+                    keyboardType: TextInputType.emailAddress,
+                    onEditingComplete: () {
+                      passwordFocusNode.requestFocus();
+                    },
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Iltimos, mail kiriting!';
+                      } else if (!RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$')
+                          .hasMatch(value)) {
+                        return 'Iltimos, yaroqli mail manzilini kiriting';
+                      }
+
+                      return null;
+                    },
+                  ),
+                  const Gap(16),
+                  TextFormField(
+                    style: textFieldContentStyle,
+                    cursorColor: cursorColor,
+                    focusNode: passwordFocusNode,
+                    controller: passwordTextEditingController,
+                    decoration: decoration(
+                      hintText: 'Password',
+                      suffixIcon: GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            isObscure = !isObscure;
+                          });
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 12, vertical: 13.5),
+                          child: SvgPicture.asset(
+                            isObscure ? AppIcons.eyeOff : AppIcons.eyeOn,
+                          ),
+                        ),
+                      ),
+                    ),
+                    onEditingComplete: () {
+                      // TODO: Login
+                    },
+                    textInputAction: TextInputAction.done,
+                    keyboardType: TextInputType.visiblePassword,
+                    obscureText: isObscure,
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Iltimos, parolingizni kiriting!';
+                      } else if (value.length < 7) {
+                        return 'Parol eng kamida 8ta belgidan tashkil topgan bo\'lishi kerak';
+                      }
+
+                      return null;
+                    },
+                  ),
+                  const Gap(12),
+                  Align(
+                    alignment: Alignment.centerRight,
+                    child: GestureDetector(
+                      onTap: () {},
+                      child: const Text(
+                        'Forgot password?',
+                        style: TextStyle(
+                          fontSize: 12,
+                          fontWeight: FontWeight.w400,
+                          color: textButtonColor,
+                        ),
+                      ),
                     ),
                   ),
-                ),
-              ),
-              onEditingComplete: () {
-                // TODO: Login
-              },
-              textInputAction: TextInputAction.done,
-              keyboardType: TextInputType.visiblePassword,
-              obscureText: isObscure,
-            ),
-            const Gap(12),
-            Align(
-              alignment: Alignment.centerRight,
-              child: GestureDetector(
-                onTap: () {},
-                child: const Text(
-                  'Forgot password?',
-                  style: TextStyle(
-                    fontSize: 12,
-                    fontWeight: FontWeight.w400,
-                    color: textButtonColor,
+                  const Gap(16),
+                  WButton(
+                    isDisabled: !isLoginDataValid,
+                    onTap: () {
+                      if (formKey.currentState!.validate()) {
+                        print("We have a valid data");
+                      }
+                    },
+                    text: 'Login',
                   ),
-                ),
+                  const Gap(56),
+                  const Row(
+                    children: [
+                      Expanded(child: WDivider()),
+                      Gap(6),
+                      Text(
+                        'OR',
+                        style: TextStyle(
+                          color: white,
+                          fontSize: 14,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                      Gap(5),
+                      Expanded(child: WDivider()),
+                    ],
+                  ),
+                  const Gap(24),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SocialMediaLoginButton(
+                          onTap: () {}, icon: AppIcons.facebook),
+                      const Gap(32),
+                      SocialMediaLoginButton(
+                          onTap: () {}, icon: AppIcons.google),
+                      const Gap(32),
+                      SocialMediaLoginButton(
+                          onTap: () {}, icon: AppIcons.apple),
+                    ],
+                  ),
+                ],
               ),
             ),
-            const Gap(16),
-            WButton(
-              onTap: () {},
-              text: 'Login',
-            ),
-            const Gap(56),
-            const Row(
-              children: [
-                Expanded(child: WDivider()),
-                Gap(6),
-                Text(
-                  'OR',
-                  style: TextStyle(
-                    color: white,
-                    fontSize: 14,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-                Gap(5),
-                Expanded(child: WDivider()),
-              ],
-            ),
-            const Gap(24),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                SocialMediaLoginButton(onTap: () {}, icon: AppIcons.facebook),
-                const Gap(32),
-                SocialMediaLoginButton(onTap: () {}, icon: AppIcons.google),
-                const Gap(32),
-                SocialMediaLoginButton(onTap: () {}, icon: AppIcons.apple),
-              ],
-            ),
-          ],
-        ),
-      ),
+          ),
+        );
+      }),
     );
   }
 }
