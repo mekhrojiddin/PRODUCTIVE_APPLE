@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gap/gap.dart';
+import 'package:productive/core/widgets/w_button.dart';
+import 'package:productive/features/authentication/presentation/widgets/social_media_login_button.dart';
 
 import '../../../assets/constants/colors.dart';
 import '../../../assets/constants/icons.dart';
+import '../../../core/widgets/w_divider.dart';
 
 class LoginScreen extends StatefulWidget {
   static Route route() => MaterialPageRoute(
@@ -127,7 +130,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                 ),
               ),
-              onEditingComplete: (){
+              onEditingComplete: () {
                 // TODO: Login
               },
               textInputAction: TextInputAction.done,
@@ -135,11 +138,52 @@ class _LoginScreenState extends State<LoginScreen> {
               obscureText: isObscure,
             ),
             const Gap(12),
-            Text('Forgot password?'),
+            Align(
+              alignment: Alignment.centerRight,
+              child: GestureDetector(
+                onTap: () {},
+                child: const Text(
+                  'Forgot password?',
+                  style: TextStyle(
+                    fontSize: 12,
+                    fontWeight: FontWeight.w400,
+                    color: textButtonColor,
+                  ),
+                ),
+              ),
+            ),
             const Gap(16),
-            Container(
-              decoration: BoxDecoration(),
-              child: Text('Login'),
+            WButton(
+              onTap: () {},
+              text: 'Login',
+            ),
+            const Gap(56),
+            const Row(
+              children: [
+                Expanded(child: WDivider()),
+                Gap(6),
+                Text(
+                  'OR',
+                  style: TextStyle(
+                    color: white,
+                    fontSize: 14,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+                Gap(5),
+                Expanded(child: WDivider()),
+              ],
+            ),
+            const Gap(24),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                SocialMediaLoginButton(onTap: () {}, icon: AppIcons.facebook),
+                const Gap(32),
+                SocialMediaLoginButton(onTap: () {}, icon: AppIcons.google),
+                const Gap(32),
+                SocialMediaLoginButton(onTap: () {}, icon: AppIcons.apple),
+              ],
             ),
           ],
         ),
