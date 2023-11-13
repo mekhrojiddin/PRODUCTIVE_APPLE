@@ -1,4 +1,5 @@
-import 'dart:ui';
+
+import 'package:flutter/material.dart';
 
 const white = _white;
 const black = _black;
@@ -19,6 +20,30 @@ const textButtonColor = _c4B7FD6;
 const wButtonColor = _c4B7FD6;
 var disabledButtonColor = _c4B7FD6.withOpacity(.3);
 const socialMediaButtonColor = _c272C38;
+const pinPutBorderColor = _c006EE9;
+const green = Colors.green;
+const verificationTextColor = _c979797;
+const verificationResentColor = _c407BFF;
+const newPasswordColor = _whitish;
+const iconColor = _c44DB4A;
+const singUpTextColor = _c4B7FD6;
+const onBoardingColor = _darkish;
+const onBordingSkip = _c4B7FD6;
+var onBoardTextColor = _whitish.withOpacity(0.5);
+const onBordingComponet = _c4B7FD6;
+const splashColor = _darkish;
+const upcomingTextColor = _cABABAB;
+const upcomingMeetColor = _c22B07D;
+const upcomingLinkBolt = _c272C38;
+const gymColor = _cFF8700;
+const upComingBorderSolid = Color.fromRGBO(255, 255, 255, 0.02);
+const studyIconColor = _cDD8491;
+const upComingLink = _c4B7FD6;
+const allCreateNavigation = _c525298;
+const allPageTextColor = _cABABAB;
+const englishStudy  = _cDD8491;
+const cleaningRoom = _c4B7FD6;
+// const tasks =rgb;
 //
 
 const _white = Color(0xFFFFFFFF);
@@ -34,3 +59,13 @@ const _c4B7FD6 = Color(0xFF4B7FD6);
 const _c1C233A = Color(0xFF1C233A);
 const _cfromRGBO = Color.fromRGBO(0, 110, 233, 0.10);
 const _c272C38 = Color(0xFF272C38);
+const _c006EE9 = Color(0xFF006EE9);
+const _c979797 = Color(0xFF979797);
+const _c407BFF = Color(0xFF407BFF);
+const _c44DB4A = Color(0xFF44DB4A);
+const _cABABAB = Color(0xFFABABAB);
+const _c22B07D = Color(0xFF22B07D);
+const _cFF8700 = Color(0xFFFF8700);
+const _cDD8491 = Color(0xFFDD8491);
+const _c525298 = Color(0xFF525298);
+// const rgb=Color(0xFF272C);

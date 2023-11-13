@@ -2,7 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gap/gap.dart';
 import 'package:productive/core/widgets/w_button.dart';
+import 'package:productive/core/widgets/w_fade.dart';
+import 'package:productive/features/authentication/presentation/pages/forgot_password/forgot_password_page.dart';
+import 'package:productive/features/authentication/presentation/pages/sign_up_page/sign_up.dart';
 import 'package:productive/features/authentication/presentation/widgets/social_media_login_button.dart';
+import 'package:productive/features/home/home.dart';
+import 'package:productive/features/on_boarding/on_boarding.dart';
 
 import '../../../assets/constants/colors.dart';
 import '../../../assets/constants/icons.dart';
@@ -127,9 +132,8 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: false,
-      body: Builder(builder: (context) {
-        return GestureDetector(
+        resizeToAvoidBottomInset: false,
+        body: GestureDetector(
           behavior: HitTestBehavior.opaque,
           onTap: () {
             if (FocusScope.of(context).hasFocus) {
@@ -176,11 +180,8 @@ class _LoginScreenState extends State<LoginScreen> {
                     decoration: decoration(
                       hintText: 'Password',
                       suffixIcon: GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            isObscure = !isObscure;
-                          });
-                        },
+                        
+                         
                         child: Padding(
                           padding: const EdgeInsets.symmetric(
                               horizontal: 12, vertical: 13.5),
@@ -210,7 +211,14 @@ class _LoginScreenState extends State<LoginScreen> {
                   Align(
                     alignment: Alignment.centerRight,
                     child: GestureDetector(
-                      onTap: () {},
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const ForgotPasswordPage(),
+                          ),
+                        );
+                      },
                       child: const Text(
                         'Forgot password?',
                         style: TextStyle(
@@ -222,14 +230,22 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                   ),
                   const Gap(16),
-                  WButton(
-                    isDisabled: !isLoginDataValid,
+                  WSale(
+                    isDisable: !isLoginDataValid,
                     onTap: () {
-                      if (formKey.currentState!.validate()) {
-                        print("We have a valid data");
-                      }
+                      
                     },
-                    text: 'Login',
+                    child: WButton(
+                      isDisabled: !isLoginDataValid,
+                      onTap: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => const HomeScreen(),
+                          ),
+                        );
+                      },
+                      text: 'Login',
+                    ),
                   ),
                   const Gap(56),
                   const Row(
@@ -266,8 +282,38 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
             ),
           ),
-        );
-      }),
-    );
+        ),
+        bottomNavigationBar: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Padding(
+              padding: EdgeInsets.only(bottom: MediaQuery.of(context).padding.bottom +18,right: 4),
+              child:const Text("Don’t have an account ?",
+                style: TextStyle(
+                  fontSize: 14, 
+                  fontWeight: FontWeight.w500,
+                  color: white,
+            
+                ),
+              ),
+            ),
+            GestureDetector(
+              onTap: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context)=>const SignUp()));
+              },
+              child: Padding(
+                padding: EdgeInsets.only(bottom: MediaQuery.of(context).padding.bottom+18 ),
+                child:const Text("Sign up",
+                style: TextStyle(
+                  fontSize: 15,
+                  color: singUpTextColor
+                ),
+                ),
+              ),
+            ),
+          ],
+        ),
+        
+      );
   }
 }

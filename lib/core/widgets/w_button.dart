@@ -34,7 +34,8 @@ class WButton extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         if (!isDisabled && !isLoading) {
-          onTap();
+          onTap()
+          ;
         }
       },
       child: Container(

@@ -41,6 +41,13 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
 
   @override
   void initState() {
+    labels = const [
+      NavBar(id: 0, icon: AppIcons.tasks, title: "Tasks"),
+      NavBar(id: 1, icon: AppIcons.expense, title: "Expense"),
+      NavBar(id: 2, icon: AppIcons.create, title: "Create"),
+      NavBar(id: 3, icon: AppIcons.calendar, title: "Calendar"),
+      NavBar(id: 4, icon: AppIcons.stats, title: "Stats"),
+    ];
     controller = AnimationController(
         vsync: this, duration: const Duration(milliseconds: 200));
 
@@ -76,14 +83,6 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    labels = const [
-      NavBar(id: 0, icon: AppIcons.tasks, title: "Tasks"),
-      NavBar(id: 1, icon: AppIcons.expense, title: "Expense"),
-      NavBar(id: 2, icon: AppIcons.create, title: "Create"),
-      NavBar(id: 3, icon: AppIcons.calendar, title: "Calendar"),
-      NavBar(id: 4, icon: AppIcons.stats, title: "Stats"),
-    ];
-
     return AnnotatedRegion(
       value: const SystemUiOverlayStyle(
         statusBarColor: Colors.white,

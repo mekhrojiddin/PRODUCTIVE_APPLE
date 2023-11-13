@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:productive/assets/constants/icons.dart';
+import 'package:productive/features/drawer/drawer.dart';
 import 'package:productive/features/tasks/presentation/pages/all.dart';
 import 'package:productive/features/tasks/presentation/pages/upcoming.dart';
+import 'package:productive/features/tasks/presentation/widgets/my_video.dart';
+import 'package:productive/features/tasks/presentation/widgets/notes_page.dart';
 
 import '../../../assets/constants/colors.dart';
 
@@ -27,7 +30,7 @@ class _TaskScreenState extends State<TaskScreen>
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        drawer: const Drawer(),
+        drawer: Drawer(child: MyDrawer()),
         appBar: AppBar(
           automaticallyImplyLeading: false,
           titleSpacing: 0,
@@ -40,9 +43,21 @@ class _TaskScreenState extends State<TaskScreen>
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    SvgPicture.asset(AppIcons.hamburger),
+                    Builder(builder: (context) {
+                      return GestureDetector(
+                          onTap: () {
+                            Scaffold.of(context).openDrawer();
+                            //  Navigator.push(context, MaterialPageRoute(builder: (context)=>const MyDrawer()));
+                          },
+                          child: SvgPicture.asset(AppIcons.hamburger));
+                    }),
                     const Spacer(),
-                    SvgPicture.asset(AppIcons.note),
+                    GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                              context, MaterialPageRoute(builder: (c)=>NotesPage()));
+                        },
+                        child: SvgPicture.asset(AppIcons.note)),
                     const SizedBox(width: 24),
                     SvgPicture.asset(AppIcons.notification),
                   ],
@@ -61,7 +76,9 @@ class _TaskScreenState extends State<TaskScreen>
                     ),
                     suffixIcon: Container(
                       padding: const EdgeInsets.all(10),
-                      child: SvgPicture.asset(AppIcons.filter),
+                      child: GestureDetector(
+                          onTap: () {},
+                          child: SvgPicture.asset(AppIcons.filter)),
                     ),
                     filled: true,
                     fillColor: textFieldBackgroundColor,
